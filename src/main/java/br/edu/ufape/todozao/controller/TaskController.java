@@ -1,42 +1,35 @@
 package br.edu.ufape.todozao.controller;
 
+import br.edu.ufape.todozao.dto.TaskCreateDTO;
+import br.edu.ufape.todozao.dto.TaskViewDTO;
 import br.edu.ufape.todozao.model.Task;
-import br.edu.ufape.todozao.model.TaskStatus;
 import br.edu.ufape.todozao.service.TaskService;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/tasks")
 public class TaskController {
 
-    private final TaskService taskService;
+    private final TaskService service;
 
-    public TaskController(TaskService taskService){
-        this.taskService = taskService;
+    public TaskController(TaskService service) {
+        this.service = service;
     }
 
-    public static class ChangeStatusRequest{
-        public TaskStatus newStatus;
-        public String notes;
-    }
+    @PostMapping
+    public ResponseEntity<TaskViewDTO> criar(@Valid @RequestBody TaskCreateDTO dto) {
+        Task task = service.criarTask(dto);
 
-    @PatchMapping("/{id}/status")
-    public Task changeStatus(@PathVariable Long id, @RequestBody ChangeStatusRequest request){
-        return taskService.changeStatus(id, request.newStatus, request.notes);
+        return ResponseEntity.ok(
+                TaskViewDTO.builder()
+                        .id(task.getId())
+                        .title(task.getTitle())
+                        .description(task.getDescription())
+                        .priority(task.getPriority())
+                        .status(task.getTaskStatus().name())
+                        .build()
+        );
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

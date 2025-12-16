@@ -1,5 +1,6 @@
 package br.edu.ufape.todozao.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -25,13 +26,13 @@ public class Task {
     private String priority;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private TaskStatus status;
+    @Column(nullable = false)
+    private TaskStatus taskStatus;
+
 
     @Column(name = "due_date")
     private String dueDate;
 
-    @Column(name = "task_type")
     private String type;
 
     @Column(name = "reset_rule")
@@ -47,6 +48,7 @@ public class Task {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private User user;
 
     @ManyToOne
