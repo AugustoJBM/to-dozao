@@ -9,6 +9,12 @@
 ### 📌 Visão Geral
 Projeto backend em Java/Spring Boot para gerenciar Tasks, com funcionalidades de histórico de alterações, subtasks, regras de recorrência e notificações. O código inclui camadas **Controller → Service → Repository**, DTOs para entrada/saída e tratamento centralizado de exceções.
 
+### 🖥 Interface do sistema
+
+<p align="center">
+  <img src="assets/dashboard.png" width="700">
+</p>
+
 ### 🛠 O que foi implementado
 - Registro de histórico de alteração de status das Tasks (`TaskHistory`). ✅
 - Endpoints, serviços e repositórios para **RecurrenceRule**, **Subtask** e **Notification**.
